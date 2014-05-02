@@ -1,5 +1,4 @@
 #gae-employee-crud
-=================
 
 A really simple implementation of Google Appengine with Python to showcase of CRUD in Google NoSQL-like datastore.
 
