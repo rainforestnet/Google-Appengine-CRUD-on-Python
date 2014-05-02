@@ -1,0 +1,100 @@
+{% extends "template/base.html" %}
+{% block title %}Employee CRUD - Add{% endblock %}
+{% block content %}
+            <div class="page-header">
+                <h3>Create Employee Record</h3>
+
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="/" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-left"></span>  Back to List</a>
+                </div>
+                <div class="panel-body">
+                    <form id="employee-entry" class="form-horizontal" role="form" method="post" action="/create">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">First Name</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required autofocus />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">Last Name</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">Marital Status</label>
+                            <div class="col-lg-4">
+                                <select id="class" class="form-control" name="marital_status">
+                                    <option>Single</option>
+                                    <option>Married</option>
+                                </select>
+                            </div>                    
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">Gender</label>
+                            <div class="col-lg-4">
+                                <select id="class" class="form-control" name="gender">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">Date of Birth</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Date of Birth" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-4">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}
+{% block footer_script %}
+    <script>
+        $(function () {
+            var t = new Date();
+            var dd = t.getDate();
+            if (dd < 10)
+                dd = "0" + dd;
+
+            var mm = t.getMonth() + 1;
+            if (mm < 10)
+                mm = "0" + mm;
+
+            var yyyy = t.getFullYear();
+
+            $("#date_of_birth").val(dd + '-' + mm + '-' + yyyy);
+            $("#date_of_birth").datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true, changeYear: true });
+        });
+
+
+        // jQuery plugin to prevent double submission of forms
+        jQuery.fn.preventDoubleSubmission = function () {
+            $(this).on('submit', function (e) {
+                var $form = $(this);
+
+                if ($form.data('submitted') === true) {
+                    // Previously submitted - don't submit again
+                    e.preventDefault();
+                } else {
+                    // Mark it so that the next submit can be ignored
+                    $form.data('submitted', true);
+                }
+            });
+
+            // Keep chainability
+            return this;
+        };
+
+        $('form').preventDoubleSubmission();
+    </script>
+{% endblock %}

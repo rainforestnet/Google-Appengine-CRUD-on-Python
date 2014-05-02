@@ -1,0 +1,49 @@
+{% extends "template/base.html" %}
+{% block title %}List of Employee{% endblock %}
+{% block content %}
+            <div class="page-header">
+                <h3>Employee CRUD Demo</h3>
+            </div>
+            <form id="employee-list" class="form-horizontal" role="form" method="post" action="/">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Employee Records
+                    </div>
+                    <div class="panel-body">
+                        <a href="/create" class="btn btn-success">Create</a>
+                        <input type="submit" class="btn btn-danger" name="delete" value="Delete">
+                        <table class="table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="col-md-2">First Name</th>
+                                    <th class="col-md-2">Last Name</th>
+                                    <th class="col-md-2">Marital Status</th>
+                                    <th class="col-md-2">Gender</th>
+                                    <th class="col-md-2">Date of Birth</th>
+                                    <th class="col-md-1">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for employee in employees %}
+                                <tr>
+                                    <td><input type="checkbox" name="employee_id" value="{{employee.key().id()}}"></td>
+                                    <td>{{ employee.first_name }}</td>
+                                    <td>{{ employee.last_name }}</td>
+                                    <td>{{ employee.marital_status }}</td>
+                                    <td>{{ employee.gender }}</td>
+                                    <td>{{ employee.date_of_birth }}</td>
+                                    <!-- get numeric ID of entity key -->
+                                    <td><a href="/edit?id={{employee.key().id()}}">Edit</a></td>
+                                </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="9">No record Found</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+{% endblock %}

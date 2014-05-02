@@ -1,0 +1,84 @@
+{% extends "template/base.html" %}
+{% block title %}Employee CRUD - Edit{% endblock %}
+{% block content %}
+            <div class="page-header">
+                <h3>Edit Employee Record</h3>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="/" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-left"></span>  Back to List</a>
+                </div>
+                <div class="panel-body">
+                    <form id="employee-entry" class="form-horizontal" role="form" method="post" action="/edit">
+                        <input type="hidden" name="id" value = "{{employee.key().id()}}">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="first_name">First Name</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{employee.first_name}}" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="last_name">Last Name</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{employee.last_name}}" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">Marital Status</label>
+                            <div class="col-lg-4">
+                                <select id="class" class="form-control" name="marital_status">
+                                    <option {% if employee.marital_status == 'Single'%}selected{% endif %}>Single</option>
+                                    <option {% if employee.marital_status == 'Married'%}selected{% endif %}>Married</option>
+                                </select>
+                            </div>                    
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">Gender</label>
+                            <div class="col-lg-4">
+                                <select id="class" class="form-control" name="gender">
+                                    <option {% if employee.gender == 'Male'%}selected{% endif %}>Male</option>
+                                    <option {% if employee.gender == 'Female'%}selected{% endif %}>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" for="">Date of Birth</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Date of Birth" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-4">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+{% endblock %}
+{% block footer_script %}
+    <script>
+        $(function () {
+            $("#date_of_birth").val('{{employee.date_of_birth}}'.substr(8,2)+ '-' + '{{employee.date_of_birth}}'.substr(5,2) + '-' + '{{employee.date_of_birth}}'.substr(0,4));
+            $("#date_of_birth").datepicker({ dateFormat: 'dd-mm-yy',changeMonth: true, changeYear: true });    
+
+        });
+
+        // jQuery plugin to prevent double submission of forms
+        jQuery.fn.preventDoubleSubmission = function () {
+            $(this).on('submit', function (e) {
+                var $form = $(this);
+
+                if ($form.data('submitted') === true) {
+                    // Previously submitted - don't submit again
+                    e.preventDefault();
+                } else {
+                    // Mark it so that the next submit can be ignored
+                    $form.data('submitted', true);
+                }
+            });
+            return this;
+        };
+    </script>   
+{% endblock %}
