@@ -1,4 +1,4 @@
-#CRUD Employee Record with Google Appengine in Python
+#CRUD Employee Record with Google Appengine in Python and Datastore (NoSQL)
 
 What this project does is trying to showcase how to use create a very simple CRUD (Create, Read, Update, Delete) application with [Google Appengine] (http://cloud.google.com/AppEngine) in Python and NoSQL Datastore coupled with Twitter's Bootstrap 3.3.1
 
