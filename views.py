@@ -15,26 +15,29 @@ jinja_environment.globals['year'] = datetime.now().year
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        #get google account ID
+        emp = Employee() 
+        template_values = {'employees' : emp.list_employee()}
+        template = jinja_environment.get_template('template/index.html')
+        self.response.out.write(template.render(template_values))
+    def post(self):
         user = users.get_current_user()
         if user:
-            emp = Employee() 
-            template_values = {'employees' : emp.list_employee()}
-            template = jinja_environment.get_template('template/index.html')
-            self.response.out.write(template.render(template_values))
+            if self.request.POST.get('delete'): #if user clicks "Delete" button
+                employee_ids = self.request.get('employee_id',allow_multiple=True) #allow_multiple=True so that it reads multiple key into list.
+                emp = Employee()
+                emp.delete_employee(employee_ids)
+                self.redirect('/')
         else:
             self.redirect(users.create_login_url(self.request.uri))
-    def post(self):
-        if self.request.POST.get('delete'): #if user clicks "Delete" button
-            employee_ids = self.request.get('employee_id',allow_multiple=True) #allow_multiple=True so that it reads multiple key into list.
-            emp = Employee()
-            emp.delete_employee(employee_ids)
-            self.redirect('/')
 
 class CreateHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('template/create.html')
-        self.response.out.write(template.render())
+        user = users.get_current_user()
+        if user:
+            template = jinja_environment.get_template('template/create.html')
+            self.response.out.write(template.render())
+        else:
+            self.redirect(users.create_login_url(self.request.uri))
     def post(self):
         #get all input values
         input_first_name = self.request.get('first_name').strip()
@@ -50,14 +53,18 @@ class CreateHandler(webapp2.RequestHandler):
 
 class EditHandler(webapp2.RequestHandler):
     def get (self):
-        #get ID of entity Key
-        emp_k = db.Key.from_path('CompanyModel','Bellucci','EmployeeModel',long(self.request.get('id')))
-        #get entity from key instance
-        emp = db.get(emp_k)
-        
-        template_values = {'employee' : emp}
-        template = jinja_environment.get_template('template/edit.html')
-        self.response.out.write(template.render(template_values))
+        user = users.get_current_user()
+        if user:
+            #get ID of entity Key
+            emp_k = db.Key.from_path('CompanyModel','Bellucci','EmployeeModel',long(self.request.get('id')))
+            #get entity from key instance
+            emp = db.get(emp_k)
+            
+            template_values = {'employee' : emp}
+            template = jinja_environment.get_template('template/edit.html')
+            self.response.out.write(template.render(template_values))
+        else:
+            self.redirect(users.create_login_url(self.request.uri))
     def post(self):
         #get all input values
         input_id = self.request.get('id')
