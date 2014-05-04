@@ -1,3 +1,5 @@
+#Where business logics reside.
+
 from models import EmployeeModel,CompanyModel
 import datetime
 from google.appengine.ext import db

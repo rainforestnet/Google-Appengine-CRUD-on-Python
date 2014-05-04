@@ -1,3 +1,5 @@
+#Collection of handlers which is to process route request from main.py
+
 import webapp2
 import cgi
 import jinja2

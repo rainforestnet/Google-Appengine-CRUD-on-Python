@@ -1,3 +1,6 @@
+#Data Model module 
+#It's similar to table schema in SQL
+#
 from google.appengine.ext import db
 
 class EmployeeModel (db.Model):
