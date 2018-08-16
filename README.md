@@ -1,5 +1,8 @@
 # CRUD Google Appengine in Python and Datastore (NoSQL)
 
+## Language
+Python
+
 ## Background
 I have been designing, developing, supporting business software applications for years, if not decades. 
 It is almost safe to say that, most modern business applications keep their data in SQL Databases. Be it CRM, ERP, Accounting, Payroll, Human Resource and etc.
@@ -26,7 +29,7 @@ Hence, I gave it a try and here is the proof of concept.
 Having said that, I have not developed a full solution with such technologies, simply because of :-
 
 You can design NoSql table like you design SQL table. Instead of normalizing table, 
-you de-normalize tables, because some NoSQL like Google Datastore doesn’t support table joining! Full suite of business application often uses tens to hundreds of tables, imagine to de-normalize all those tables?
+you de-normalize tables, because some NoSQL like Google Datastore doesnâ€™t support table joining! Full suite of business application often uses tens to hundreds of tables, imagine to de-normalize all those tables?
 For serious software development, you need to have a team of programmers sooner or later, 
 would I be able to assemble a team that capable of working with NoSQL?
 
